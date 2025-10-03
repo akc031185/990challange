@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useState } from 'react';
 import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
 import { Button } from '../ui/button';
