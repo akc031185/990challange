@@ -21,6 +21,6 @@
     }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "build", "dist", "api", "lib"],
+  "exclude": ["node_modules", "build", "dist", "api", "lib", "src/supabase", "src/capacitor.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
