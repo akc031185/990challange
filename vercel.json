@@ -1,11 +1,7 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "vite build",
   "outputDirectory": "build",
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "nodejs20.x"
-    }
-  },
+  "installCommand": "npm install",
   "rewrites": [
     {
       "source": "/api/(.*)",
