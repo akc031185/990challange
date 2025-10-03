@@ -1,0 +1,39 @@
+{
+  "name": "90-day-challenge",
+  "version": "1.0.0",
+  "description": "Transform your life with 9 daily actions over 90 days",
+  "main": "index.js",
+  "scripts": {
+    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "cap:add:ios": "npx cap add ios",
+    "cap:sync": "npx cap sync",
+    "cap:open:ios": "npx cap open ios",
+    "ios:dev": "npm run build && npx cap sync && npx cap open ios",
+    "ios:build": "npm run build && npx cap sync ios",
+    "ios:release": "npm run build && npx cap sync ios && npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/app": "^5.0.0",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/haptics": "^5.0.0",
+    "@capacitor/keyboard": "^5.0.0",
+    "@capacitor/share": "^5.0.0",
+    "@capacitor/status-bar": "^5.0.0",
+    "@capacitor/splash-screen": "^5.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "lucide-react": "latest"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^5.0.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.0"
+  },
+  "author": "90-Day Challenge Team",
+  "license": "MIT",
+  "keywords": ["productivity", "habits", "challenge", "90-day", "ios", "health", "goals"],
+  "homepage": "."
+}

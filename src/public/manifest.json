@@ -1,0 +1,39 @@
+{
+  "name": "90-Day Challenge Tracker",
+  "short_name": "90-Day Challenge",
+  "description": "Transform your life with 9 daily actions over 90 days",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#030213",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "lifestyle", "health"],
+  "screenshots": [
+    {
+      "src": "/screenshot-narrow.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1024x768",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}
