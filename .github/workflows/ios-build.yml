@@ -60,11 +60,11 @@ jobs:
             lane :beta do
               setup_ci
 
-              # Load App Store Connect API Key
+              # Load App Store Connect API Key from file
               api_key = app_store_connect_api_key(
                 key_id: ENV["APP_STORE_KEY_ID"],
                 issuer_id: ENV["APP_STORE_ISSUER_ID"],
-                key_content: ENV["APP_STORE_KEY_CONTENT"],
+                key_filepath: "fastlane/AuthKey.p8",
                 duration: 1200,
                 in_house: false
               )
@@ -97,7 +97,7 @@ jobs:
 
               # Upload to TestFlight
               upload_to_testflight(
-                api_key_path: "fastlane/app_store_key.json",
+                api_key: api_key,
                 skip_waiting_for_build_processing: true
               )
             end
@@ -107,15 +107,7 @@ jobs:
       - name: Create App Store Connect API Key
         run: |
           cd ios/App/fastlane
-          cat > app_store_key.json << EOF
-          {
-            "key_id": "${{ secrets.APP_STORE_KEY_ID }}",
-            "issuer_id": "${{ secrets.APP_STORE_ISSUER_ID }}",
-            "key": "${{ secrets.APP_STORE_KEY_CONTENT }}",
-            "duration": 1200,
-            "in_house": false
-          }
-          EOF
+          echo "${{ secrets.APP_STORE_KEY_CONTENT }}" > AuthKey.p8
 
       - name: Run Fastlane
         env:
