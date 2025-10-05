@@ -1,0 +1,116 @@
+name: iOS Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web app
+        run: npm run build
+
+      - name: Sync Capacitor
+        run: npx cap sync ios
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Install Fastlane
+        run: |
+          cd ios/App
+          gem install fastlane
+
+      - name: Create Fastlane Appfile
+        run: |
+          cd ios/App
+          mkdir -p fastlane
+          cat > fastlane/Appfile << EOF
+          app_identifier("com.ninetydaychallenge.app")
+          apple_id("${{ secrets.APPLE_ID }}")
+          team_id("5PCJV8QVA7")
+          EOF
+
+      - name: Create Fastlane Fastfile
+        run: |
+          cd ios/App
+          cat > fastlane/Fastfile << 'EOF'
+          default_platform(:ios)
+
+          platform :ios do
+            desc "Build and upload to TestFlight"
+            lane :beta do
+              setup_ci
+
+              # Create or update certificates and provisioning profiles
+              match(
+                type: "appstore",
+                readonly: is_ci,
+                git_url: "${{ secrets.MATCH_REPO }}",
+                git_basic_authorization: "${{ secrets.MATCH_GIT_TOKEN }}"
+              )
+
+              # Increment build number
+              increment_build_number(
+                xcodeproj: "App.xcodeproj"
+              )
+
+              # Build the app
+              build_app(
+                scheme: "App",
+                workspace: "App.xcworkspace",
+                export_method: "app-store",
+                export_options: {
+                  provisioningProfiles: {
+                    "com.ninetydaychallenge.app" => "match AppStore com.ninetydaychallenge.app"
+                  }
+                }
+              )
+
+              # Upload to TestFlight
+              upload_to_testflight(
+                api_key_path: "fastlane/app_store_key.json",
+                skip_waiting_for_build_processing: true
+              )
+            end
+          end
+          EOF
+
+      - name: Create App Store Connect API Key
+        run: |
+          cd ios/App/fastlane
+          cat > app_store_key.json << EOF
+          {
+            "key_id": "${{ secrets.APP_STORE_KEY_ID }}",
+            "issuer_id": "${{ secrets.APP_STORE_ISSUER_ID }}",
+            "key": "${{ secrets.APP_STORE_KEY_CONTENT }}",
+            "duration": 1200,
+            "in_house": false
+          }
+          EOF
+
+      - name: Run Fastlane
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          cd ios/App
+          fastlane beta
