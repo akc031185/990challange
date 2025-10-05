@@ -64,8 +64,8 @@ jobs:
               match(
                 type: "appstore",
                 readonly: is_ci,
-                git_url: "${{ secrets.MATCH_REPO }}",
-                git_basic_authorization: "${{ secrets.MATCH_GIT_TOKEN }}"
+                git_url: ENV["MATCH_REPO"],
+                git_basic_authorization: Base64.strict_encode64(ENV["MATCH_GIT_TOKEN"])
               )
 
               # Increment build number
@@ -109,6 +109,8 @@ jobs:
 
       - name: Run Fastlane
         env:
+          MATCH_REPO: ${{ secrets.MATCH_REPO }}
+          MATCH_GIT_TOKEN: ${{ secrets.MATCH_GIT_TOKEN }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
         run: |
