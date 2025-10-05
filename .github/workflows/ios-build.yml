@@ -63,7 +63,7 @@ jobs:
               # Create or update certificates and provisioning profiles
               match(
                 type: "appstore",
-                readonly: is_ci,
+                readonly: false,
                 git_url: ENV["MATCH_REPO"],
                 git_basic_authorization: Base64.strict_encode64(ENV["MATCH_GIT_TOKEN"])
               )
