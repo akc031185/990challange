@@ -31,7 +31,11 @@ jobs:
       - name: Set Team ID in Xcode project
         run: |
           cd ios/App
-          sed -i '' 's/DEVELOPMENT_TEAM = "";/DEVELOPMENT_TEAM = 5PCJV8QVA7;/g' App.xcodeproj/project.pbxproj
+          # Update project.pbxproj to set team ID
+          sed -i.bak 's/DEVELOPMENT_TEAM = "";/DEVELOPMENT_TEAM = 5PCJV8QVA7;/g' App.xcodeproj/project.pbxproj
+          sed -i.bak 's/DEVELOPMENT_TEAM = ;/DEVELOPMENT_TEAM = 5PCJV8QVA7;/g' App.xcodeproj/project.pbxproj
+          # Also ensure ProvisioningStyle is Manual
+          sed -i.bak 's/ProvisioningStyle = Automatic;/ProvisioningStyle = Manual;/g' App.xcodeproj/project.pbxproj
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -93,7 +97,10 @@ jobs:
                 scheme: "App",
                 workspace: "App.xcworkspace",
                 export_method: "app-store",
+                export_team_id: "5PCJV8QVA7",
+                xcargs: "DEVELOPMENT_TEAM=5PCJV8QVA7",
                 export_options: {
+                  teamID: "5PCJV8QVA7",
                   provisioningProfiles: {
                     "com.ninetydaychallenge.app" => "match AppStore com.ninetydaychallenge.app"
                   }
