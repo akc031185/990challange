@@ -28,6 +28,11 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync ios
 
+      - name: Set Team ID in Xcode project
+        run: |
+          cd ios/App
+          sed -i '' 's/DEVELOPMENT_TEAM = "";/DEVELOPMENT_TEAM = 5PCJV8QVA7;/g' App.xcodeproj/project.pbxproj
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
