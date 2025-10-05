@@ -13,9 +13,11 @@ interface GratitudeTrackerProps {
 export const GratitudeTracker = ({ people, onUpdate }: GratitudeTrackerProps) => {
   const [newPerson, setNewPerson] = useState('');
   const [gratitudePeople, setGratitudePeople] = useState(people);
+  const [showInput, setShowInput] = useState(people.length < 2);
 
   useEffect(() => {
     setGratitudePeople(people);
+    setShowInput(people.length < 2);
   }, [people]);
 
   const addPerson = () => {
@@ -24,6 +26,9 @@ export const GratitudeTracker = ({ people, onUpdate }: GratitudeTrackerProps) =>
       setGratitudePeople(updatedPeople);
       onUpdate(updatedPeople);
       setNewPerson('');
+      if (updatedPeople.length >= 2) {
+        setShowInput(false);
+      }
     }
   };
 
@@ -37,7 +42,7 @@ export const GratitudeTracker = ({ people, onUpdate }: GratitudeTrackerProps) =>
     <div className="space-y-4">
       <div className="space-y-3">
         <Label className="activity-label text-sm font-medium text-foreground">Text gratitude to 2 people</Label>
-        
+
         {gratitudePeople.length > 0 && (
           <div className="space-y-2">
             <Label className="activity-label text-xs font-medium text-muted-foreground uppercase tracking-wide">People texted:</Label>
@@ -57,17 +62,27 @@ export const GratitudeTracker = ({ people, onUpdate }: GratitudeTrackerProps) =>
           </div>
         )}
 
-        <div className="flex gap-2">
-          <Input
-            placeholder="Add person's name..."
-            value={newPerson}
-            onChange={(e) => setNewPerson(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && addPerson()}
-          />
-          <Button onClick={addPerson} size="sm">
-            <Plus className="h-4 w-4" />
-          </Button>
-        </div>
+        {showInput ? (
+          <div className="flex gap-2">
+            <Input
+              placeholder="Add person's name..."
+              value={newPerson}
+              onChange={(e) => setNewPerson(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && addPerson()}
+            />
+            <Button onClick={addPerson} size="sm">
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setShowInput(true)}
+            className="text-primary text-sm hover:underline flex items-center gap-1"
+          >
+            <Plus className="h-3 w-3" />
+            Add more people
+          </button>
+        )}
       </div>
 
       <div className={`activity-description text-xs font-medium ${gratitudePeople.length >= 2 ? 'text-green-600' : 'text-orange-600'}`}>

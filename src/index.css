@@ -4,26 +4,30 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --background: 222 47% 11%;         /* Dark navy background */
+    --foreground: 180 100% 80%;        /* Bright cyan text */
+    --card: 222 47% 15%;               /* Slightly lighter dark cards */
+    --card-foreground: 180 100% 85%;
+    --popover: 222 47% 15%;
+    --popover-foreground: 180 100% 85%;
+    --primary: 195 100% 60%;           /* Vibrant cyan */
+    --primary-foreground: 222 47% 15%; /* Dark card color for thumb */
+    --secondary: 280 85% 70%;          /* Bright purple */
+    --secondary-foreground: 222 47% 11%;
+    --muted: 222 30% 35%;              /* Lighter for toggle backgrounds */
+    --muted-foreground: 180 60% 65%;
+    --accent: 330 100% 70%;            /* Bright pink */
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 30% 30%;             /* Lighter borders for visibility */
+    --input: 222 30% 20%;
+    --ring: 195 100% 60%;
+    --radius: 0.75rem;
+    --switch-background: 222 30% 25%;  /* Dark track OFF state */
+    --switch-background-checked: 195 100% 70%; /* Bright cyan ON state */
+    --switch-thumb: 0 0% 95%;          /* Light thumb OFF state */
+    --switch-thumb-checked: 222 47% 12%; /* Dark thumb ON state */
   }
 }
 
@@ -38,5 +42,27 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Force consistent dark theme - prevent light theme interference */
+@layer components {
+  /* Ensure switches work properly in dark theme */
+  button[role="switch"], [data-slot="switch"] {
+    background-color: hsl(var(--switch-background)) !important;
+    border: 2px solid hsl(var(--border)) !important;
+  }
+
+  button[role="switch"][data-state="checked"],
+  [data-slot="switch"][data-state="checked"] {
+    background-color: hsl(var(--switch-background-checked)) !important;
+    border-color: hsl(var(--switch-background-checked)) !important;
+    box-shadow: 0 0 16px hsla(195, 100%, 70%, 0.5) !important;
+  }
+
+  /* Force cards to stay consistent */
+  .card, [data-slot="card"] {
+    background-color: hsl(var(--card)) !important;
+    color: hsl(var(--card-foreground)) !important;
   }
 }

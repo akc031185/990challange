@@ -1,0 +1,25 @@
+/* Option 2: Ocean Blue (Calm & Professional) */
+@layer base {
+  :root {
+    --background: 200 100% 96%;        /* Light blue-gray background */
+    --foreground: 200 90% 12%;         /* Deep ocean blue text */
+    --card: 0 0% 100%;
+    --card-foreground: 200 90% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 200 90% 12%;
+    --primary: 200 95% 45%;            /* Ocean blue */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 180 75% 50%;          /* Turquoise */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 200 40% 92%;
+    --muted-foreground: 200 40% 40%;
+    --accent: 195 85% 55%;             /* Bright cyan */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 200 30% 85%;
+    --input: 200 30% 90%;
+    --ring: 200 95% 45%;
+    --radius: 0.75rem;
+  }
+}

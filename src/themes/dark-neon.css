@@ -1,0 +1,25 @@
+/* Dark Mode with Neon Accents */
+@layer base {
+  :root {
+    --background: 240 10% 8%;          /* Deep charcoal background */
+    --foreground: 160 100% 75%;        /* Bright mint green text */
+    --card: 240 10% 12%;               /* Slightly lighter dark cards */
+    --card-foreground: 160 100% 80%;
+    --popover: 240 10% 12%;
+    --popover-foreground: 160 100% 80%;
+    --primary: 310 100% 65%;           /* Neon magenta */
+    --primary-foreground: 240 10% 8%;
+    --secondary: 45 100% 60%;          /* Electric yellow */
+    --secondary-foreground: 240 10% 8%;
+    --muted: 240 10% 20%;
+    --muted-foreground: 160 60% 60%;
+    --accent: 180 100% 65%;            /* Bright aqua */
+    --accent-foreground: 240 10% 8%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 10% 22%;
+    --input: 240 10% 15%;
+    --ring: 310 100% 65%;
+    --radius: 0.75rem;
+  }
+}

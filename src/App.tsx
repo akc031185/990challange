@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { DailyTracker } from './components/DailyTracker';
 import { ProgressOverview } from './components/ProgressOverview';
 import { ShareProgress } from './components/ShareProgress';
+import { ChallengeCalendar } from './components/ChallengeCalendar';
 import { MobileOptimizations } from './components/MobileOptimizations';
 import { AuthProvider } from './components/auth/AuthProvider';
 import { AuthForm } from './components/auth/AuthForm';
@@ -23,8 +24,9 @@ const AppContent = () => {
   const [showHealthSetup, setShowHealthSetup] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [userTeamId, setUserTeamId] = useState<string | null>(null);
-  const { isAvailable: healthAvailable } = useHealthKit();
+  const { isAvailable: healthAvailable} = useHealthKit();
 
   // Initialize challenge data syncing with auth token
   useChallenge(accessToken);
@@ -206,17 +208,33 @@ const AppContent = () => {
                   </p>
                 </div>
                 <ProgressOverview />
-                
+
+                {/* Calendar View */}
+                <div className="grid gap-3">
+                  <ChallengeCalendar onDateSelect={(date) => setSelectedDate(date)} />
+                </div>
+
                 {/* Share Progress */}
                 <ShareProgress />
-                
-                <div className="grid gap-4">
-                  <div className="text-center p-6 border-2 border-dashed border-border rounded-lg">
-                    <p className="text-sm text-muted-foreground">
-                      More detailed analytics and calendar view coming soon!
-                    </p>
+
+                {/* Edit Modal for Selected Date */}
+                {selectedDate && (
+                  <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-card border border-border rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                      <div className="sticky top-0 bg-card border-b border-border p-4 flex items-center justify-between">
+                        <h3 className="text-lg font-semibold text-foreground">
+                          Edit {new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                        </h3>
+                        <Button onClick={() => setSelectedDate(null)} variant="ghost" size="sm">
+                          Close
+                        </Button>
+                      </div>
+                      <div className="p-4">
+                        <DailyTracker selectedDate={selectedDate} />
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </TabsContent>
             

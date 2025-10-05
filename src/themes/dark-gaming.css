@@ -1,0 +1,25 @@
+/* Dark Mode with Gaming RGB Vibe */
+@layer base {
+  :root {
+    --background: 0 0% 7%;             /* Pure dark black background */
+    --foreground: 120 100% 70%;        /* Bright lime green text */
+    --card: 0 0% 11%;                  /* Slightly lighter dark cards */
+    --card-foreground: 120 100% 75%;
+    --popover: 0 0% 11%;
+    --popover-foreground: 120 100% 75%;
+    --primary: 275 100% 65%;           /* Electric purple */
+    --primary-foreground: 0 0% 7%;
+    --secondary: 0 100% 65%;           /* Bright red */
+    --secondary-foreground: 0 0% 7%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 120 80% 60%;
+    --accent: 180 100% 55%;            /* Cyan blue */
+    --accent-foreground: 0 0% 7%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 13%;
+    --ring: 275 100% 65%;
+    --radius: 0.75rem;
+  }
+}

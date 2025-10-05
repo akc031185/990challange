@@ -9,9 +9,15 @@ export const useCapacitor = () => {
   const [appState, setAppState] = useState<AppState>({ isActive: true });
 
   useEffect(() => {
-    setIsNative(Capacitor.isNativePlatform());
+    const native = Capacitor.isNativePlatform();
+    setIsNative(native);
 
-    // Listen for app state changes
+    // Only set up native listeners on iOS/Android (not in browser)
+    if (!native) {
+      return; // Skip listener setup in browser
+    }
+
+    // Listen for app state changes (iOS/Android only)
     const appStateListener = App.addListener('appStateChange', (state) => {
       setAppState(state);
     });
@@ -26,8 +32,9 @@ export const useCapacitor = () => {
     });
 
     return () => {
-      appStateListener.remove();
-      backButtonListener.remove();
+      // Cleanup listeners (only runs on iOS/Android)
+      appStateListener.then(listener => listener.remove());
+      backButtonListener.then(listener => listener.remove());
     };
   }, []);
 

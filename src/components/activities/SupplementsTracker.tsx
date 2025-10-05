@@ -15,9 +15,11 @@ interface SupplementsTrackerProps {
 export const SupplementsTracker = ({ list, taken, onUpdate }: SupplementsTrackerProps) => {
   const [newSupplement, setNewSupplement] = useState('');
   const [supplements, setSupplements] = useState(list);
+  const [showInput, setShowInput] = useState(list.length === 0);
 
   useEffect(() => {
     setSupplements(list);
+    setShowInput(list.length === 0);
   }, [list]);
 
   const addSupplement = () => {
@@ -26,6 +28,7 @@ export const SupplementsTracker = ({ list, taken, onUpdate }: SupplementsTracker
       setSupplements(updatedList);
       onUpdate({ list: updatedList, taken });
       setNewSupplement('');
+      setShowInput(false);
     }
   };
 
@@ -43,36 +46,47 @@ export const SupplementsTracker = ({ list, taken, onUpdate }: SupplementsTracker
     <div className="space-y-4">
       <div className="space-y-2">
         <Label className="activity-label text-sm font-medium text-foreground">Your Supplements/Vitamins</Label>
-        <div className="flex gap-2">
-          <Input
-            placeholder="Add supplement..."
-            value={newSupplement}
-            onChange={(e) => setNewSupplement(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && addSupplement()}
-          />
-          <Button onClick={addSupplement} size="sm">
-            <Plus className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
 
-      {supplements.length > 0 && (
-        <div className="space-y-2">
-          <div className="flex flex-wrap gap-2">
-            {supplements.map((supplement) => (
-              <Badge key={supplement} variant="secondary" className="flex items-center gap-1">
-                {supplement}
-                <button
-                  onClick={() => removeSupplement(supplement)}
-                  className="ml-1 hover:text-destructive"
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              </Badge>
-            ))}
+        {supplements.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex flex-wrap gap-2">
+              {supplements.map((supplement) => (
+                <Badge key={supplement} variant="secondary" className="flex items-center gap-1">
+                  {supplement}
+                  <button
+                    onClick={() => removeSupplement(supplement)}
+                    className="ml-1 hover:text-destructive"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
+        {showInput ? (
+          <div className="flex gap-2">
+            <Input
+              placeholder="Add supplement..."
+              value={newSupplement}
+              onChange={(e) => setNewSupplement(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && addSupplement()}
+            />
+            <Button onClick={addSupplement} size="sm">
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setShowInput(true)}
+            className="text-primary text-sm hover:underline flex items-center gap-1"
+          >
+            <Plus className="h-3 w-3" />
+            Add more supplements
+          </button>
+        )}
+      </div>
 
       <div className="flex items-center justify-between">
         <Label htmlFor="supplements-taken" className="activity-label text-sm font-medium text-foreground">Taken today</Label>

@@ -301,7 +301,7 @@ export const ShareProgress = ({ className }: ShareProgressProps) => {
       />
       
       {/* Compact share section */}
-      <Card className="border-2 border-dashed border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-950/10 dark:to-purple-950/10">
+      <Card className="border-2 border-dashed border-blue-200 dark:border-blue-800 bg-card">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -311,7 +311,7 @@ export const ShareProgress = ({ className }: ShareProgressProps) => {
               <div>
                 <div className="font-semibold text-sm text-foreground">Share Your Progress</div>
                 <div className="text-xs text-muted-foreground">
-                  {earnedBonusPoint ? '🎉 Perfect day to share!' : `${completedActivities}/${totalActivities} activities today`}
+                  {completedActivities}/{totalActivities} activities today
                 </div>
               </div>
             </div>

@@ -1,0 +1,25 @@
+/* Dark Mode with Sunset Colors */
+@layer base {
+  :root {
+    --background: 260 30% 10%;         /* Deep purple-navy background */
+    --foreground: 35 100% 75%;         /* Warm orange text */
+    --card: 260 30% 14%;               /* Slightly lighter dark cards */
+    --card-foreground: 35 100% 80%;
+    --popover: 260 30% 14%;
+    --popover-foreground: 35 100% 80%;
+    --primary: 340 95% 65%;            /* Coral pink */
+    --primary-foreground: 260 30% 10%;
+    --secondary: 200 100% 65%;         /* Sky blue */
+    --secondary-foreground: 260 30% 10%;
+    --muted: 260 20% 24%;
+    --muted-foreground: 35 80% 65%;
+    --accent: 15 100% 70%;             /* Bright orange-red */
+    --accent-foreground: 260 30% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 260 20% 26%;
+    --input: 260 20% 18%;
+    --ring: 340 95% 65%;
+    --radius: 0.75rem;
+  }
+}

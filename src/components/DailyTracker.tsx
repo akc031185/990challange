@@ -10,12 +10,21 @@ import { ConnectionTracker } from './activities/ConnectionTracker';
 import { PostsTracker } from './activities/PostsTracker';
 import { useChallenge } from '../hooks/useChallenge';
 
-export const DailyTracker = () => {
-  // Note: useChallenge is now called from App.tsx with accessToken
-  // We'll access it through a context or pass it as props
-  // For now, we'll use it without token (it will still work locally)
-  const { getTodayData, updateTodayData, challengeData, updateSupplements, updateUserSettings, getWeeklyLOICount } = useChallenge();
-  const todayData = getTodayData();
+interface DailyTrackerProps {
+  selectedDate?: string; // Optional: for editing past dates
+}
+
+export const DailyTracker = ({ selectedDate }: DailyTrackerProps = {}) => {
+  const { getTodayData, updateTodayData, challengeData, updateSupplements, updateUserSettings, getWeeklyLOICount, updateDateData } = useChallenge();
+
+  // Use selected date or today
+  const todayData = selectedDate
+    ? (challengeData.dailyData[selectedDate] || getTodayData())
+    : getTodayData();
+
+  const updateData = selectedDate && updateDateData
+    ? (data: any) => updateDateData(selectedDate, data)
+    : updateTodayData;
 
   return (
     <div className="grid gap-4 grid-cols-1">
@@ -27,7 +36,7 @@ export const DailyTracker = () => {
           target={challengeData.userSettings?.calorieTarget || 2000}
           achieved={todayData.calories.achieved}
           onTargetUpdate={(target) => updateUserSettings({ calorieTarget: target })}
-          onAchievedUpdate={(achieved) => updateTodayData({ calories: { achieved } })}
+          onAchievedUpdate={(achieved) => updateData({ calories: { achieved } })}
         />
       </ActivityCard>
 
@@ -38,7 +47,7 @@ export const DailyTracker = () => {
         <WorkoutTracker
           completed={todayData.workout.completed}
           description={todayData.workout.description}
-          onUpdate={(data) => updateTodayData({ workout: data })}
+          onUpdate={(data) => updateData({ workout: data })}
         />
       </ActivityCard>
 
@@ -59,7 +68,7 @@ export const DailyTracker = () => {
       >
         <SleepTracker
           hours={todayData.sleep.hours}
-          onUpdate={(hours) => updateTodayData({ sleep: { hours } })}
+          onUpdate={(hours) => updateData({ sleep: { hours } })}
         />
       </ActivityCard>
 
@@ -71,7 +80,7 @@ export const DailyTracker = () => {
           habitDescription={challengeData.userSettings?.habitDescription || ''}
           completed={todayData.habit.completed}
           onHabitUpdate={(habitDescription) => updateUserSettings({ habitDescription })}
-          onCompletedUpdate={(completed) => updateTodayData({ habit: { completed } })}
+          onCompletedUpdate={(completed) => updateData({ habit: { completed } })}
         />
       </ActivityCard>
 
@@ -83,7 +92,7 @@ export const DailyTracker = () => {
           submitted={todayData.loi.submitted}
           description={todayData.loi.description}
           weeklyCount={getWeeklyLOICount()}
-          onUpdate={(data) => updateTodayData({ loi: data })}
+          onUpdate={(data) => updateData({ loi: data })}
         />
       </ActivityCard>
 
@@ -93,7 +102,7 @@ export const DailyTracker = () => {
       >
         <GratitudeTracker
           people={todayData.gratitude.people}
-          onUpdate={(people) => updateTodayData({ gratitude: { people } })}
+          onUpdate={(people) => updateData({ gratitude: { people } })}
         />
       </ActivityCard>
 
@@ -104,7 +113,7 @@ export const DailyTracker = () => {
         <ConnectionTracker
           made={todayData.connection.made}
           name={todayData.connection.name}
-          onUpdate={(data) => updateTodayData({ connection: data })}
+          onUpdate={(data) => updateData({ connection: data })}
         />
       </ActivityCard>
 
@@ -115,7 +124,7 @@ export const DailyTracker = () => {
         <PostsTracker
           reel={todayData.posts.reel}
           story={todayData.posts.story}
-          onUpdate={(data) => updateTodayData({ posts: data })}
+          onUpdate={(data) => updateData({ posts: data })}
         />
       </ActivityCard>
     </div>
