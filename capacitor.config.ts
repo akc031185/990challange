@@ -2,25 +2,26 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.ninetydaychallenge.app',
-  appName: '90-Day Challenge',
+  appName: '990 Challenge',
   webDir: 'build',
   server: {
     androidScheme: 'https'
   },
   ios: {
     scheme: 'NinetyDayChallenge',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#16202c',  // Dark navy background
     allowsLinkPreview: false,
     scrollEnabled: true,
     disableLogs: false,
     minVersion: '14.0',
     preferredContentMode: 'mobile',
-    presentationStyle: 'fullscreen'
+    presentationStyle: 'fullscreen',
+    teamId: '5PCJV8QVA7'
   },
   plugins: {
     SplashScreen: {
       launchShowDuration: 2000,
-      backgroundColor: '#ffffff',
+      backgroundColor: '#16202c',  // Dark navy to match theme
       androidSplashResourceName: 'splash',
       androidScaleType: 'CENTER_CROP',
       showSpinner: false,
@@ -28,8 +29,8 @@ const config: CapacitorConfig = {
       splashImmersive: true
     },
     StatusBar: {
-      style: 'default',
-      backgroundColor: '#ffffff'
+      style: 'dark',  // Dark status bar for dark theme
+      backgroundColor: '#16202c'
     },
     Keyboard: {
       resize: 'ionic',
