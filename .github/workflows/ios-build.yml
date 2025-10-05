@@ -87,6 +87,15 @@ jobs:
                 api_key: api_key
               )
 
+              # Update code signing settings to use the correct profile
+              update_code_signing_settings(
+                use_automatic_signing: false,
+                path: "App.xcodeproj",
+                team_id: "5PCJV8QVA7",
+                code_sign_identity: "Apple Distribution",
+                profile_name: "match AppStore com.ninetydaychallenge.app"
+              )
+
               # Increment build number
               increment_build_number(
                 xcodeproj: "App.xcodeproj"
