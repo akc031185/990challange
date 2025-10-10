@@ -65,4 +65,20 @@
     background-color: hsl(var(--card)) !important;
     color: hsl(var(--card-foreground)) !important;
   }
+
+  /* iOS smooth scrolling and touch optimization */
+  .overflow-y-auto, .overflow-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+
+  /* Prevent double-tap zoom on iOS */
+  * {
+    touch-action: manipulation;
+  }
+
+  /* Allow scrolling in specific areas */
+  .overflow-y-auto {
+    touch-action: pan-y !important;
+  }
 }

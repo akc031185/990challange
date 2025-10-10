@@ -181,14 +181,14 @@ const AppContent = () => {
               <TabsTrigger value="team" className="text-xs">Team</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="today" className="mt-6">
+            <TabsContent value="today" className="mt-6 overflow-y-auto max-h-[calc(100vh-16rem)] pb-20">
               <div className="space-y-4">
                 {/* Progress Overview */}
                 <ProgressOverview />
-                
+
                 {/* Share Progress - Show if user has some progress */}
                 <ShareProgress />
-                
+
                 <div className="text-center">
                   <h2 className="text-xl font-semibold">Complete Your Daily Actions</h2>
                   <p className="text-sm text-muted-foreground">
@@ -199,7 +199,7 @@ const AppContent = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="progress" className="mt-6">
+            <TabsContent value="progress" className="mt-6 overflow-y-auto max-h-[calc(100vh-16rem)] pb-20">
               <div className="space-y-4">
                 <div className="text-center">
                   <h2 className="text-xl font-semibold">Your Progress</h2>
@@ -229,7 +229,7 @@ const AppContent = () => {
                           Close
                         </Button>
                       </div>
-                      <div className="p-4">
+                      <div className="p-4 overflow-y-auto max-h-[calc(90vh-5rem)]">
                         <DailyTracker selectedDate={selectedDate} />
                       </div>
                     </div>
